@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoriesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TodosController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,15 +17,18 @@ use App\Http\Controllers\TodosController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
-Route::get('/tareas', [TodosController::class, 'index'])->name('todos');
+Route::get('/tareas', [TodosController::class, 'index'])->name('todos.index');
 
-Route::post('/tareas', [TodosController::class, 'store'])->name('todos');
+Route::post('/tareas', [TodosController::class, 'store'])->name('todos.store');
 
-Route::get('/tareas/{id}', [TodosController::class, 'show'])->name('todos-edit');
-Route::patch('/tareas/{id}', [TodosController::class, 'update'])->name('todos-update');
-Route::delete('/tareas/{id}', [TodosController::class, 'destroy'])->name('todos-destroy');
+Route::get('/tareas/{id}', [TodosController::class, 'show'])->name('todos.show');
+Route::patch('/tareas/{id}', [TodosController::class, 'update'])->name('todos.update');
+Route::delete('/tareas/{id}', [TodosController::class, 'destroy'])->name('todos.destroy');
 
 Route::resource('categories', CategoriesController::class);
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

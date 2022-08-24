@@ -17,14 +17,16 @@ class TodosController extends Controller
 
      public function store(Request $request){
          $request->validate([
-             'title' => 'required|min:3'
+             'title' => 'required|min:3',
+             'description' => 'optional'
          ]);
 
          $todo = new Todo;
          $todo->title = $request->title;
+         $todo->description = $request->description;
          $todo->save();
 
-         return redirect()->route('todos')->with('success', 'Tarea creada correctamente');
+         return redirect()->route('todos.index')->with('success', 'Tarea creada correctamente');
          
      }
 
@@ -41,11 +43,12 @@ class TodosController extends Controller
      public function update(Request $request, $id){
          $todo = Todo::find($id);
          $todo->title = $request->title;
+         $todo->description = $request->description;
 
          $todo->save();
 
-         //return view('todos.index', [ 'success'=>'Tarea actualizada' ]);
-         return redirect()->route('todos')->with('success', 'Tarea actualizada!');
+         // return view('todos.index', [ 'success'=>'Tarea actualizada' ]);
+         return redirect()->route('todos.index')->with('success', 'Tarea actualizada!');
 
      }
 
@@ -53,7 +56,7 @@ class TodosController extends Controller
          $todo = Todo::find($id);
 
          $todo->delete();
-         return redirect()->route('todos')->with('success', 'La tarea ha sido eliminada!');
+         return redirect()->route('todos.index')->with('success', 'La tarea ha sido eliminada!');
 
      }
 
