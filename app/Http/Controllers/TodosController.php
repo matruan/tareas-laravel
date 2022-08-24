@@ -18,7 +18,7 @@ class TodosController extends Controller
      public function store(Request $request){
          $request->validate([
              'title' => 'required|min:3',
-             'description' => 'optional'
+             'description' => 'required'
          ]);
 
          $todo = new Todo;
